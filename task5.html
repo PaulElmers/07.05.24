@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створення тесту</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #questionList {
+            margin-top: 20px;
+        }
+        #questionList li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Створення тесту</h2>
+
+<form id="quizForm">
+    <div id="questionsContainer"></div>
+
+    <div id="addQuestion">
+        <label for="question">Питання:</label>
+        <input type="text" id="question" name="question" required><br>
+
+        <label for="correctAnswer">Вірна відповідь:</label>
+        <input type="text" id="correctAnswer" name="correctAnswer" required><br>
+
+        <label for="wrongAnswer">Хибна відповідь:</label>
+        <input type="text" id="wrongAnswer" name="wrongAnswer" required><br>
+
+        <button type="button" onclick="addQuestion()">Додати питання</button>
+    </div>
+
+    <button type="submit">Зберегти тест</button>
+</form>
+
+<ul id="questionList"></ul>
+
+<script>
+    function addQuestion() {
+        var questionInput = document.getElementById("question").value.trim();
+        var correctAnswerInput = document.getElementById("correctAnswer").value.trim();
+        var wrongAnswerInput = document.getElementById("wrongAnswer").value.trim();
+
+        if (questionInput && correctAnswerInput && wrongAnswerInput) {
+            var questionItem = document.createElement("li");
+            questionItem.textContent = questionInput;
+            document.getElementById("questionList").appendChild(questionItem);
+
+            document.getElementById("question").value = '';
+            document.getElementById("correctAnswer").value = '';
+            document.getElementById("wrongAnswer").value = '';
+
+            var questionData = {
+                question: questionInput,
+                correctAnswer: correctAnswerInput,
+                wrongAnswer: wrongAnswerInput
+            };
+            console.log("Збережено питання:", questionData);
+        } else {
+            alert("Будь ласка, заповніть всі поля!");
+        }
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Тест збережено!");
+    });
+</script>
+
+</body>
+</html>

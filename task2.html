@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація користувача</title>
+</head>
+<body>
+
+<h2>Форма реєстрації</h2>
+
+<form id="registrationForm" action="#" method="post" onsubmit="return validateForm()">
+    <label for="email">Електронна пошта:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="login">Логін:</label><br>
+    <input type="text" id="login" name="login" required><br><br>
+
+    <label for="password">Пароль:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <label for="confirm_password">Підтвердіть пароль:</label><br>
+    <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+
+    <input type="submit" value="Зареєструватися">
+</form>
+
+<div id="confirmationMessage" style="display: none;">
+</div>
+
+<script>
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+
+        if (password !== confirm_password) {
+            alert("Паролі не співпадають");
+            return false;
+        }
+
+        var email = document.getElementById("email").value;
+        var confirmationDiv = document.getElementById("confirmationMessage");
+        confirmationDiv.innerHTML = "На " + email + " надіслано лист із підтвердженням";
+        confirmationDiv.style.display = "block";
+        return false;
+    }
+</script>
+
+</body>
+</html>

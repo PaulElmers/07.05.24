@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма інформації про користувача</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #userInfoDisplay {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        #userInfoDisplay h3 {
+            color: #333;
+        }
+        #userInfoDisplay p {
+            margin-bottom: 10px;
+        }
+        #userInfoDisplay strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Заповніть інформацію про користувача</h2>
+
+<form id="userInfoForm">
+    <label for="name">Ім'я:</label><br>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="surname">Прізвище:</label><br>
+    <input type="text" id="surname" name="surname" required><br>
+
+    <label for="email">Електронна пошта:</label><br>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="age">Вік:</label><br>
+    <input type="number" id="age" name="age" required><br>
+
+    <label for="country">Країна:</label><br>
+    <select id="country" name="country" required onchange="updateCityOptions()">
+        <option value="" disabled selected>Виберіть країну</option>
+        <option value="USA">Сполучені Штати Америки</option>
+        <option value="UK">Велика Британія</option>
+        <option value="France">Франція</option>
+        <option value="Germany">Німеччина</option>
+    </select><br>
+
+    <label>Мови програмування, які ви знаєте:</label><br>
+    <input type="checkbox" id="cpp" name="languages[]" value="cpp">
+    <label for="cpp">C++</label><br>
+    <input type="checkbox" id="java" name="languages[]" value="java">
+    <label for="java">Java</label><br>
+    <input type="checkbox" id="python" name="languages[]" value="python">
+    <label for="python">Python</label><br>
+    <input type="checkbox" id="javascript" name="languages[]" value="javascript">
+    <label for="javascript">JavaScript</label><br>
+
+    <label for="city">Місто:</label><br>
+    <select id="city" name="city" required>
+    </select><br>
+
+    <label for="gender">Стать:</label><br>
+    <select id="gender" name="gender" required>
+        <option value="male">Чоловіча</option>
+        <option value="female">Жіноча</option>
+        <option value="other">Інше</option>
+    </select><br>
+
+    <button type="button" onclick="showUserInfo()">Показати інформацію</button>
+</form>
+
+<div id="userInfoDisplay" style="display: none;">
+    <h3>Інформація про користувача:</h3>
+    <p><strong>Ім'я:</strong> <span id="displayedName"></span></p>
+    <p><strong>Прізвище:</strong> <span id="displayedSurname"></span></p>
+    <p><strong>Електронна пошта:</strong> <span id="displayedEmail"></span></p>
+    <p><strong>Вік:</strong> <span id="displayedAge"></span></p>
+    <p><strong>Країна:</strong> <span id="displayedCountry"></span></p>
+    <p><strong>Місто:</strong> <span id="displayedCity"></span></p>
+    <p><strong>Мови програмування:</strong> <span id="displayedLanguages"></span></p>
+    <p><strong>Стать:</strong> <span id="displayedGender"></span></p>
+</div>
+
+<script>
+    var citiesByCountry = {
+        USA: ["Нью-Йорк", "Лос-Анджелес", "Чикаго", "Хьюстон"],
+        UK: ["Лондон", "Манчестер", "Ліверпуль", "Бірмінгем"],
+        France: ["Париж", "Марсель", "Ліон", "Тулуза"],
+        Germany: ["Берлін", "Мюнхен", "Гамбург", "Кельн"]
+    };
+
+    function updateCityOptions() {
+        var selectedCountry = document.getElementById("country").value;
+        var citySelect = document.getElementById("city");
+        citySelect.innerHTML = '';
+
+        if (selectedCountry in citiesByCountry) {
+            var cities = citiesByCountry[selectedCountry];
+            cities.forEach(function(city) {
+                var option = document.createElement("option");
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+            });
+        }
+    }
+
+    function showUserInfo() {
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var email = document.getElementById("email").value;
+        var age = document.getElementById("age").value;
+        var country = document.getElementById("country").value;
+        var city = document.getElementById("city").value;
+        var gender = document.getElementById("gender").value;
+
+        var languages = [];
+        var checkboxes = document.querySelectorAll('input[name="languages[]"]:checked');
+        checkboxes.forEach(function(checkbox) {
+            languages.push(checkbox.value);
+        });
+
+        document.getElementById("displayedName").textContent = name;
+        document.getElementById("displayedSurname").textContent = surname;
+        document.getElementById("displayedEmail").textContent = email;
+        document.getElementById("displayedAge").textContent = age;
+        document.getElementById("displayedCountry").textContent = country;
+        document.getElementById("displayedCity").textContent = city;
+        document.getElementById("displayedLanguages").textContent = languages.join(", ");
+        document.getElementById("displayedGender").textContent = gender;
+
+        document.getElementById("userInfoDisplay").style.display = "block";
+    }
+
+    window.onload = updateCityOptions;
+</script>
+
+</body>
+</html>
